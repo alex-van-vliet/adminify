@@ -11,7 +11,8 @@
     "minimum-stability": "dev",
     "license": "MIT",
     "require": {
-        "php": "^8.0"
+        "php": "^8.0",
+        "alexvanvliet/migratify": "dev-main"
     },
     "autoload": {
         "psr-4": {
