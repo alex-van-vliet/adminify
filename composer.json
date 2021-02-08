@@ -1,0 +1,40 @@
+{
+    "name": "alexvanvliet/adminify",
+    "description": "Laravel admin panel creator linked with migratify",
+    "authors": [
+        {
+            "name": "Alex van Vliet",
+            "email": "alex@vanvliet.pro"
+        }
+    ],
+    "type": "library",
+    "minimum-stability": "dev",
+    "license": "MIT",
+    "require": {
+        "php": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "AlexVanVliet\\Adminify\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "AlexVanVliet\\Adminify\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "AlexVanVliet\\Adminify\\Providers\\AdminifyServiceProvider"
+            ]
+        }
+    },
+    "require-dev": {
+        "orchestra/testbench": "^6.0",
+        "phpunit/phpunit":  "^9"
+    },
+    "scripts": {
+        "test": "phpunit"
+    }
+}
