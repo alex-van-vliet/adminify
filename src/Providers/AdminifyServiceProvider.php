@@ -35,6 +35,9 @@ class AdminifyServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__.'/../resources/views' => resource_path('views/vendor/adminify'),
             ], 'views');
+            $this->publishes([
+                __DIR__.'/../resources/assets' => public_path('adminify'),
+            ], 'assets');
         }
     }
 }
