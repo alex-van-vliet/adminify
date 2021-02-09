@@ -28,7 +28,10 @@
         "laravel": {
             "providers": [
                 "AlexVanVliet\\Adminify\\Providers\\AdminifyServiceProvider"
-            ]
+            ],
+            "aliases": {
+                "Adminify": "AlexVanVliet\\Adminify\\Facades\\Adminify"
+            }
         }
     },
     "require-dev": {
