@@ -8,6 +8,6 @@ class IndexController extends Controller
 {
     public function __invoke()
     {
-        return 'hi';
+        return view('adminify::index');
     }
 }
