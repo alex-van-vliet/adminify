@@ -3,7 +3,7 @@
 
 namespace AlexVanVliet\Adminify\Providers;
 
-use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AdminifyServiceProvider extends ServiceProvider
@@ -33,11 +33,13 @@ class AdminifyServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             // Publish views
             $this->publishes([
-                __DIR__.'/../resources/views' => resource_path('views/vendor/adminify'),
+                __DIR__ . '/../resources/views' => resource_path('views/vendor/adminify'),
             ], 'views');
             $this->publishes([
-                __DIR__.'/../resources/assets' => public_path('adminify'),
+                __DIR__ . '/../resources/assets' => public_path('adminify'),
             ], 'assets');
         }
+
+        Gate::define('adminify.admin.index', fn($user) => true);
     }
 }
