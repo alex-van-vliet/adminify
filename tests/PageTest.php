@@ -5,8 +5,14 @@ namespace AlexVanVliet\Adminify\Tests;
 
 
 use AlexVanVliet\Adminify\Facades\Adminify;
+use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Routing\Middleware\SubstituteBindings;
+use Illuminate\Session\Middleware\StartSession;
+use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class PageTest extends TestCase
 {
@@ -31,12 +37,24 @@ class PageTest extends TestCase
     {
         parent::getEnvironmentSetUp($app);
 
-        Adminify::routes($app->make('router'));
+        $app->make('router')->group(['middleware' => [
+            EncryptCookies::class,
+            AddQueuedCookiesToResponse::class,
+            StartSession::class,
+            // \Illuminate\Session\Middleware\AuthenticateSession::class,
+            ShareErrorsFromSession::class,
+            VerifyCsrfToken::class,
+            SubstituteBindings::class,
+        ]], function ($router) {
+            Adminify::routes($router);
+        });
 
         require_once __DIR__ . '/database/migrations/2014_10_12_000000_create_users_table.php';
 
         (new \CreateUsersTable())->up();
         // Add admin field is automatically added.
+
+        config(['migratify.models' => [User::class]]);
     }
 
     public function setUp(): void

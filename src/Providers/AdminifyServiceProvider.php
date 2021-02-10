@@ -3,7 +3,11 @@
 
 namespace AlexVanVliet\Adminify\Providers;
 
+use App\Models\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\RecordsNotFoundException;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 class AdminifyServiceProvider extends ServiceProvider
@@ -42,5 +46,14 @@ class AdminifyServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
 
         Gate::define('adminify.admin.index', fn($user) => boolval($user->admin));
+        Route::bind('model', function ($value) {
+            foreach (config('migratify.models') as $model) {
+                $model = new $model();
+                if ($value === $model->getTable()) {
+                    return $model;
+                }
+            }
+            throw new RecordsNotFoundException();
+        });
     }
 }

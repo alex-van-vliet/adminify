@@ -28,5 +28,6 @@
     </testsuites>
     <php>
         <env name="DB_CONNECTION" value="testing"/>
+        <env name="APP_KEY" value="base64:IaGdHNaRXrZv7FJS8C0wPOghGWDnLALtr0fd7f+4WJk="/>
     </php>
 </phpunit>
