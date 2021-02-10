@@ -34,10 +34,9 @@ class PageTest extends TestCase
         Adminify::routes($app->make('router'));
 
         require_once __DIR__ . '/database/migrations/2014_10_12_000000_create_users_table.php';
-        require_once __DIR__ . '/../database/migrations/2021_02_10_000000_add_admin_field_to_users.php';
 
         (new \CreateUsersTable())->up();
-        (new \AddAdminFieldToUsers())->up();
+        // Add admin field is automatically added.
     }
 
     public function setUp(): void
