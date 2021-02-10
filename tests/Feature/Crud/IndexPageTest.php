@@ -22,7 +22,6 @@ class IndexPageTest extends PageTest
     /** @test */
     function the_index_page_displays_the_model()
     {
-        $this->withoutExceptionHandling();
         $response = $this->actingAs($this->admin)->request();
 
         $response->assertSeeText('Users');
@@ -31,7 +30,6 @@ class IndexPageTest extends PageTest
     /** @test */
     function the_index_page_displays_all_the_users()
     {
-        $this->withoutExceptionHandling();
         $response = $this->actingAs($this->admin)->request();
 
         foreach (User::all() as $user) {
@@ -44,11 +42,18 @@ class IndexPageTest extends PageTest
     /** @test */
     function the_index_page_displays_all_the_fields()
     {
-        $this->withoutExceptionHandling();
         $response = $this->actingAs($this->admin)->request();
 
         $response->assertSeeText('Id');
         $response->assertSeeText('Name');
         $response->assertSeeText('Email');
+    }
+
+    /** @test */
+    function the_index_page_does_not_show_the_password  ()
+    {
+        $response = $this->actingAs($this->admin)->request();
+
+        $response->assertDontSeeText('Password');
     }
 }

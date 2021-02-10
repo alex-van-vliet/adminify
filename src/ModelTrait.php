@@ -5,6 +5,7 @@ namespace AlexVanVliet\Adminify;
 
 
 use AlexVanVliet\Migratify\Model;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 function snakeToTitle(string $snake): string
@@ -24,7 +25,7 @@ trait ModelTrait
         return snakeToTitle($field);
     }
 
-    public function getAdminFields(?Model $attribute = null): array
+    public function getAdminFields(?Model $attribute = null): Collection
     {
         if (is_null($attribute)) {
             $attribute = Model::from_attribute(self::class);
@@ -62,7 +63,13 @@ trait ModelTrait
             $fields[] = [$this->getAdminFieldName('deleted_at'), 'deleted_at', $attribute->getFields()['deleted_at']];
         }
 
-        return $fields;
+        return collect($fields);
+    }
+
+    public function getAdminFieldsForIndex(?Model $attribute = null): Collection
+    {
+        return $this->getAdminFields($attribute)
+            ->filter(fn($field) => !in_array($field[1], ['password', 'remember_token']));
     }
 
     public function getCrudIndex()
