@@ -3,11 +3,10 @@
 
 namespace AlexVanVliet\Adminify\Providers;
 
-use App\Models\User;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\RecordsNotFoundException;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AdminifyServiceProvider extends ServiceProvider
@@ -56,6 +55,15 @@ class AdminifyServiceProvider extends ServiceProvider
                 }
             }
             throw new RecordsNotFoundException();
+        });
+
+        View::composer('adminify::sidebar', function ($view) {
+            $links = [];
+            foreach (config('migratify.models') as $model) {
+                $model = new $model();
+                $links[] = [$model->getCrudIndex(), $model->getAdminTitle()];
+            }
+            return $view->with('links', $links);
         });
     }
 }
