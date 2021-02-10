@@ -14,12 +14,15 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 #[Model([
+    'id' => [Field::ID, [], ['adminify' => ['hidden' => ['store']]]],
+    'admin' => [Field::BOOLEAN, ['default' => false]],
     'name' => [Field::STRING],
     'email' => [Field::STRING, ['unique']],
-    'email_verified_at' => [Field::TIMESTAMP, ['nullable']],
+    'email_verified_at' => [Field::TIMESTAMP, ['nullable'], ['adminify' => ['hidden' => ['store']]]],
     'password' => [Field::STRING, [], ['adminify' => ['hidden' => ['index']]]],
-    'remember_token' => [Field::STRING, ['length' => 100, 'nullable'], ['adminify' => ['hidden' => ['index']]]],
-    'admin' => [Field::BOOLEAN, ['default' => false]],
+    'remember_token' => [Field::STRING, ['length' => 100, 'nullable'], ['adminify' => ['hidden' => ['index', 'store']]]],
+    'created_at' => [Field::TIMESTAMP, [], ['adminify' => ['hidden' => ['store']]]],
+    'updated_at' => [Field::TIMESTAMP, [], ['adminify' => ['hidden' => ['store']]]],
 ])]
 class User extends Authenticatable
 {

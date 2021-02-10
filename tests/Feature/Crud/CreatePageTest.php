@@ -18,4 +18,35 @@ class CreatePageTest extends PageTest
     {
         return $this->get($this->route());
     }
+
+    /** @test */
+    function the_create_page_displays_the_model()
+    {
+        $response = $this->actingAs($this->admin)->request();
+
+        $response->assertSeeText('User');
+    }
+
+    /** @test */
+    function the_create_page_displays_all_the_fields()
+    {
+        $response = $this->actingAs($this->admin)->request();
+
+        $response->assertSeeText('Admin');
+        $response->assertSeeText('Name');
+        $response->assertSeeText('Email');
+        $response->assertSeeText('Password');
+    }
+
+    /** @test */
+    function the_create_page_does_not_show_the_hidden_fields()
+    {
+        $response = $this->actingAs($this->admin)->request();
+
+        $response->assertDontSeeText('Id');
+        $response->assertDontSeeText('Email Verified At');
+        $response->assertDontSeeText('Remember Token');
+        $response->assertDontSeeText('Created At');
+        $response->assertDontSeeText('Updated At');
+    }
 }

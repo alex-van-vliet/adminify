@@ -46,7 +46,7 @@
                             @foreach($breadcrumb ?? [] as [$link, $name])
                                 <li class="breadcrumb-item"><a href="{{ $link }}">{{ $name }}</a></li>
                             @endforeach
-                            <li class="breadcrumb-item active">{{ $title }}</li>
+                            <li class="breadcrumb-item active">{{ $breadcrumb_title ?? $title }}</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->

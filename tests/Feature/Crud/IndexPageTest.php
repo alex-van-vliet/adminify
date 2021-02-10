@@ -50,10 +50,11 @@ class IndexPageTest extends PageTest
     }
 
     /** @test */
-    function the_index_page_does_not_show_the_password  ()
+    function the_index_page_does_not_show_the_hidden_fields()
     {
         $response = $this->actingAs($this->admin)->request();
 
         $response->assertDontSeeText('Password');
+        $response->assertDontSeeText('Remember Token');
     }
 }
