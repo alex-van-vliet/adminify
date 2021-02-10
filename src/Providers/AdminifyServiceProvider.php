@@ -46,6 +46,8 @@ class AdminifyServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
 
         Gate::define('adminify.admin.index', fn($user) => boolval($user->admin));
+        Gate::define('adminify.admin.crud.index', fn($user, $model) => boolval($user->admin));
+
         Route::bind('model', function ($value) {
             foreach (config('migratify.models') as $model) {
                 $model = new $model();

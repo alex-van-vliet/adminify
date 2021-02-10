@@ -14,7 +14,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
-class PageTest extends TestCase
+abstract class PageTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -63,5 +63,33 @@ class PageTest extends TestCase
 
         $this->admin = User::factory()->admin()->create();
         $this->user = User::factory()->create();
+    }
+
+    abstract protected function route();
+
+    abstract protected function request();
+
+    /** @test */
+    function unauthenticated_users_are_forbidden()
+    {
+        $response = $this->request();
+
+        $response->assertForbidden();
+    }
+
+    /** @test */
+    function non_admin_users_are_forbidden()
+    {
+        $response = $this->actingAs($this->user)->request();
+
+        $response->assertForbidden();
+    }
+
+    /** @test */
+    function admin_users_are_allowed()
+    {
+        $response = $this->actingAs($this->admin)->request();
+
+        $response->assertOk();
     }
 }

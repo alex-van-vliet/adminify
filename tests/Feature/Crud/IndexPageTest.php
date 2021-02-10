@@ -9,11 +9,21 @@ use AlexVanVliet\Adminify\Tests\User;
 
 class IndexPageTest extends PageTest
 {
+    protected function route()
+    {
+        return route('adminify.crud.index', ['model' => (new User())->getTable()]);
+    }
+
+    protected function request()
+    {
+        return $this->get($this->route());
+    }
+
     /** @test */
     function the_index_page_displays_the_model()
     {
         $this->withoutExceptionHandling();
-        $response = $this->actingAs($this->admin)->get(route('adminify.crud.index', ['model' => (new User())->getTable()]));
+        $response = $this->actingAs($this->admin)->request();
 
         $response->assertSeeText('Users');
     }
@@ -22,7 +32,7 @@ class IndexPageTest extends PageTest
     function the_index_page_displays_all_the_users()
     {
         $this->withoutExceptionHandling();
-        $response = $this->actingAs($this->admin)->get(route('adminify.crud.index', ['model' => (new User())->getTable()]));
+        $response = $this->actingAs($this->admin)->request();
 
         foreach (User::all() as $user) {
             $response->assertSeeText($user->id);
@@ -35,7 +45,7 @@ class IndexPageTest extends PageTest
     function the_index_page_displays_all_the_fields()
     {
         $this->withoutExceptionHandling();
-        $response = $this->actingAs($this->admin)->get(route('adminify.crud.index', ['model' => (new User())->getTable()]));
+        $response = $this->actingAs($this->admin)->request();
 
         $response->assertSeeText('Id');
         $response->assertSeeText('Name');
