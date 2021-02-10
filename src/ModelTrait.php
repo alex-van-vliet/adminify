@@ -17,9 +17,7 @@ trait ModelTrait
 {
     public function getAdminTitle(bool $singular = false, ?Model $attribute = null): string
     {
-        if (is_null($attribute)) {
-            $attribute = Model::from_attribute(self::class);
-        }
+        $attribute ??= Model::from_attribute(self::class);
 
         $s = $attribute->getOptions()['adminify']['title'] ?? snakeToTitle(Str::singular($this->getTable()));
         if ($singular)
@@ -30,18 +28,14 @@ trait ModelTrait
 
     public function getAdminFieldName($field, ?Model $attribute = null): string
     {
-        if (is_null($attribute)) {
-            $attribute = Model::from_attribute(self::class);
-        }
+        $attribute ??= Model::from_attribute(self::class);
 
-        return $attribute->getOptions()['adminify']['fields'][$field]['name'] ?? snakeToTitle($field);
+        return $attribute->getFields()[$field]->getOptions()['adminify']['name'] ?? snakeToTitle($field);
     }
 
     public function getAdminFields(?Model $attribute = null): Collection
     {
-        if (is_null($attribute)) {
-            $attribute = Model::from_attribute(self::class);
-        }
+        $attribute ??= Model::from_attribute(self::class);
 
         $do_not_treat = [];
         if ($attribute->getOptions()['id']) {
@@ -78,10 +72,13 @@ trait ModelTrait
         return collect($fields);
     }
 
-    public function getAdminFieldsForIndex(?Model $attribute = null): Collection
+    public function getAdminHiddenFields(string $for, ?Model $attribute = null): Collection
     {
-        return $this->getAdminFields($attribute)
-            ->filter(fn($field) => !in_array($field[1], ['password', 'remember_token']));
+        $attribute ??= Model::from_attribute(self::class);
+
+        return collect($attribute->getFields())
+            ->filter(fn($f) => in_array($for, $f->getOptions()['adminify']['hidden'] ?? []))
+            ->keys();
     }
 
     public function getCrudIndex()
