@@ -4,6 +4,7 @@
 namespace AlexVanVliet\Adminify\Tests;
 
 
+use AlexVanVliet\Adminify\ModelTrait as AdminifyModelTrait;
 use AlexVanVliet\Adminify\Tests\Database\Factories\UserFactory;
 use AlexVanVliet\Migratify\Fields\Field;
 use AlexVanVliet\Migratify\Model;
@@ -22,7 +23,7 @@ use Illuminate\Notifications\Notifiable;
 ])]
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, ModelTrait;
+    use HasFactory, Notifiable, ModelTrait, AdminifyModelTrait;
 
     /**
      * The attributes that should be hidden for arrays.

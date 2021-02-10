@@ -1,5 +1,5 @@
 @extends('adminify::app', [
-    'title' => $title,
+    'title' => $model->getAdminTitle(),
     'breadcrumb' => [
         [route('adminify.index'), 'Index']
     ]
