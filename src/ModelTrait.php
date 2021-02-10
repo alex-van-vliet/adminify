@@ -15,14 +15,26 @@ function snakeToTitle(string $snake): string
 
 trait ModelTrait
 {
-    public function getAdminTitle(): string
+    public function getAdminTitle(bool $singular = false, ?Model $attribute = null): string
     {
-        return snakeToTitle($this->getTable());
+        if (is_null($attribute)) {
+            $attribute = Model::from_attribute(self::class);
+        }
+
+        $s = $attribute->getOptions()['adminify']['title'] ?? snakeToTitle(Str::singular($this->getTable()));
+        if ($singular)
+            return $s;
+        else
+            return Str::plural($s);
     }
 
-    public function getAdminFieldName($field): string
+    public function getAdminFieldName($field, ?Model $attribute = null): string
     {
-        return snakeToTitle($field);
+        if (is_null($attribute)) {
+            $attribute = Model::from_attribute(self::class);
+        }
+
+        return $attribute->getOptions()['adminify']['fields'][$field]['name'] ?? snakeToTitle($field);
     }
 
     public function getAdminFields(?Model $attribute = null): Collection
