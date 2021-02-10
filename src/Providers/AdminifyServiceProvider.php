@@ -39,7 +39,8 @@ class AdminifyServiceProvider extends ServiceProvider
                 __DIR__ . '/../resources/assets' => public_path('adminify'),
             ], 'assets');
         }
+        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
 
-        Gate::define('adminify.admin.index', fn($user) => true);
+        Gate::define('adminify.admin.index', fn($user) => boolval($user->admin));
     }
 }

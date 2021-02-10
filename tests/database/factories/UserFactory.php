@@ -30,4 +30,16 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
         ];
     }
+
+    /**
+     * Generate an admin user.
+     *
+     * @return self
+     */
+    public function admin()
+    {
+        return $this->state(fn($attributes) => [
+            'admin' => true,
+        ]);
+    }
 }

@@ -18,6 +18,7 @@ use Illuminate\Notifications\Notifiable;
     'email_verified_at' => [Field::TIMESTAMP, ['nullable']],
     'password' => [Field::STRING, []],
     'remember_token' => [Field::STRING, ['length' => 100, 'nullable']],
+    'admin' => [Field::BOOLEAN, ['default' => false]],
 ])]
 class User extends Authenticatable
 {
