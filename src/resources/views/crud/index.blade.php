@@ -27,6 +27,7 @@
                                     @endforeach
                                 </tr>
                             @endforeach
+                            </tbody>
                             <tfoot>
                             <tr>
                                 @foreach($fields as [$name, $accessor, $field])
