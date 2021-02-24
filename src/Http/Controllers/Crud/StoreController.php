@@ -36,9 +36,9 @@ class StoreController extends Controller
         $hiddenFields = $model->getAdminHiddenFields('store', $attribute);
         $fields = $fields->filter(fn($field) => !$hiddenFields->contains($field[1]))->values();
 
-        $fields = $fields->map(fn($field) => array_merge($field, [Field::getField($field)]));
+        $fields = $fields->map(fn($field) => Field::getField($field));
 
-        $rules = $fields->mapWithKeys(fn($field) => [$field[1] => $field[3]->rules()]);
+        $rules = $fields->mapWithKeys(fn($field) => [$field->getAccessor() => $field->rules()]);
 
         $data = $this->validate($request, $rules->toArray());
 
