@@ -6,6 +6,7 @@ namespace AlexVanVliet\Adminify\Tests\Feature\Crud;
 
 use AlexVanVliet\Adminify\Tests\PageTest;
 use AlexVanVliet\Adminify\Tests\User;
+use Illuminate\Support\ViewErrorBag;
 
 class CreatePageTest extends PageTest
 {
@@ -58,5 +59,16 @@ class CreatePageTest extends PageTest
         ])->request();
 
         $response->assertSee('This Is My Name');
+    }
+
+    /** @test */
+    function the_create_page_displays_error_messages()
+    {
+        $bag = (new ViewErrorBag())->add('name', 'The name field is required.');
+        $response = $this->actingAs($this->admin)->session([
+            'errors' => $bag,
+        ])->request();
+
+        $response->assertSee('The name field is required.');
     }
 }
