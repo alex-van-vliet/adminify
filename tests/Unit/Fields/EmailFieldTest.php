@@ -9,7 +9,7 @@ use AlexVanVliet\Adminify\Fields\StringField;
 use AlexVanVliet\Adminify\Tests\TestCase;
 use AlexVanVliet\Migratify\Fields\Field as MigratifyField;
 
-class StringFieldTest extends TestCase
+class EmailFieldTest extends TestCase
 {
     protected StringField $field;
 
@@ -17,32 +17,26 @@ class StringFieldTest extends TestCase
     {
         parent::setUp();
 
-        $this->field = Field::getField('Name', 'name', new MigratifyField(MigratifyField::STRING));
+        $this->field = Field::getField('Email', 'email', new MigratifyField(MigratifyField::STRING));
     }
 
     /** @test */
     public function it_creates_a_string_field()
     {
-        $this->assertSame('Name', $this->field->getName());
-        $this->assertSame('name', $this->field->getAccessor());
+        $this->assertSame('Email', $this->field->getName());
+        $this->assertSame('email', $this->field->getAccessor());
     }
 
     /** @test */
-    public function it_is_not_an_email()
+    public function it_is_an_email()
     {
-        $this->assertFalse($this->field->isEmail());
-    }
-
-    /** @test */
-    public function it_is_not_a_password()
-    {
-        $this->assertFalse($this->field->isPassword());
+        $this->assertTrue($this->field->isEmail());
     }
 
     /** @test */
     public function it_returns_the_correct_view()
     {
-        $this->assertSame('adminify::fields.string', $this->field->view());
+        $this->assertSame('adminify::fields.email', $this->field->view());
     }
 
     /** @test */
@@ -64,26 +58,14 @@ class StringFieldTest extends TestCase
     }
 
     /** @test */
-    function its_default_length_can_be_overriden()
+    function it_should_be_an_email()
     {
-        $field = Field::getField('Name', 'name', new MigratifyField(MigratifyField::STRING, ['length' => 12]));
-        $this->assertContains('max:12', $field->rules());
+        $this->assertContains('email', $this->field->rules());
     }
 
     /** @test */
     function it_returns_the_same_value()
     {
         $this->assertSame('test', $this->field->value('test'));
-    }
-
-    /** @test */
-    function custom_rules_can_be_added()
-    {
-        $field = Field::getField('Name', 'name', new MigratifyField(MigratifyField::STRING, [], [
-            'adminify' => [
-                'rules' => ['min:8'],
-            ],
-        ]));
-        $this->assertContains('min:8', $field->rules());
     }
 }

@@ -4,40 +4,46 @@
 namespace AlexVanVliet\Adminify\Tests\Unit\Fields;
 
 
+use AlexVanVliet\Adminify\Fields\BooleanField;
 use AlexVanVliet\Adminify\Fields\Field;
 use AlexVanVliet\Adminify\Tests\TestCase;
 use AlexVanVliet\Migratify\Fields\Field as MigratifyField;
 
 class BooleanFieldTest extends TestCase
 {
-    /** @test */
-    function a_boolean_field_is_created_from_a_boolean_field()
+    protected BooleanField $field;
+
+    public function setUp(): void
     {
-        $field = Field::getField('Admin', 'admin', new MigratifyField(MigratifyField::BOOLEAN));
-        $this->assertSame('Admin', $field->getName());
-        $this->assertSame('admin', $field->getAccessor());
+        parent::setUp();
+
+        $this->field = Field::getField('Admin', 'admin', new MigratifyField(MigratifyField::BOOLEAN));
     }
 
     /** @test */
-    function the_boolean_field_returns_the_correct_view()
+    public function it_creates_a_boolean_field()
     {
-        $field = Field::getField('Admin', 'admin', new MigratifyField(MigratifyField::BOOLEAN));
-        $this->assertSame('adminify::fields.boolean', $field->view());
+        $this->assertSame('Admin', $this->field->getName());
+        $this->assertSame('admin', $this->field->getAccessor());
     }
 
     /** @test */
-    function the_boolean_field_does_not_have_rules()
+    public function it_returns_the_correct_view()
     {
-        $field = Field::getField('Admin', 'admin', new MigratifyField(MigratifyField::BOOLEAN));
-        $this->assertSame([], $field->rules());
+        $this->assertSame('adminify::fields.boolean', $this->field->view());
     }
 
     /** @test */
-    function its_value_can_be_computed()
+    function it_has_no_rules()
     {
-        $field = Field::getField('Admin', 'admin', new MigratifyField(MigratifyField::BOOLEAN));
-        $this->assertTrue($field->value('1'));
-        $this->assertFalse($field->value('0'));
-        $this->assertFalse($field->value(null));
+        $this->assertEmpty($this->field->rules());
+    }
+
+    /** @test */
+    function it_returns_the_boolean_value()
+    {
+        $this->assertTrue($this->field->value('1'));
+        $this->assertFalse($this->field->value('0'));
+        $this->assertFalse($this->field->value(null));
     }
 }
