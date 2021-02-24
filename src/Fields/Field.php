@@ -27,14 +27,13 @@ abstract class Field
     }
 
     /**
-     * @param [string, string, MigratifyField] $field
+     * @param string $name The name.
+     * @param string $accessor The accessor.
+     * @param MigratifyField $field The field.
      * @return static
      */
-    public static function getField($field): static
+    public static function getField($name, $accessor, $field): static
     {
-        [$name, $accessor, $field] = $field;
-        /** @var MigratifyField $field */
-
         $formFieldClass = [
             MigratifyField::STRING => StringField::class,
         ][$field->getType()];

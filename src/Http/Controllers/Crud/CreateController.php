@@ -35,7 +35,7 @@ class CreateController extends Controller
         $hiddenFields = $model->getAdminHiddenFields('store', $attribute);
         $fields = $fields->filter(fn($field) => !$hiddenFields->contains($field[1]))->values();
 
-        $fields = $fields->map(fn($field) => Field::getField($field));
+        $fields = $fields->map(fn($field) => Field::getField(...$field));
 
         return view('adminify::crud.create', compact('attribute', 'fields', 'model'));
     }
