@@ -5,6 +5,7 @@ namespace AlexVanVliet\Adminify\Fields;
 
 
 use Illuminate\Database\Schema\Builder;
+use Illuminate\Support\Str;
 
 class StringField extends Field
 {
@@ -16,6 +17,9 @@ class StringField extends Field
     public function rules(): array
     {
         $length = $this->field->getAttributes()['length'] ?? Builder::$defaultStringLength;
-        return ['required', "max:$length"];
+        $rules = ['required', "max:$length"];
+        if (Str::contains($this->accessor, 'email'))
+            $rules [] = 'email';
+        return $rules;
     }
 }

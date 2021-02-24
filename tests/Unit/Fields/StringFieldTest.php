@@ -45,4 +45,18 @@ class StringFieldTest extends TestCase
         $field = Field::getField('Name', 'name', new MigratifyField(MigratifyField::STRING, ['length' => 12]));
         $this->assertContains('max:12', $field->rules());
     }
+
+    /** @test */
+    function a_field_should_not_ne_an_email()
+    {
+        $field = Field::getField('Name', 'name', new MigratifyField(MigratifyField::STRING));
+        $this->assertNotContains('email', $field->rules());
+    }
+
+    /** @test */
+    function an_accessor_containing_email_should_be_an_email()
+    {
+        $field = Field::getField('Email', 'email', new MigratifyField(MigratifyField::STRING));
+        $this->assertContains('email', $field->rules());
+    }
 }
