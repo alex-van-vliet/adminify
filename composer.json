@@ -1,5 +1,5 @@
 {
-    "name": "alexvanvliet/adminify",
+    "name": "alex-van-vliet/adminify",
     "description": "Laravel admin panel creator linked with migratify",
     "authors": [
         {
@@ -12,7 +12,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.0",
-        "alexvanvliet/migratify": "dev-main"
+        "alex-van-vliet/migratify": "dev-main"
     },
     "autoload": {
         "psr-4": {
