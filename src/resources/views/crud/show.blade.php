@@ -11,6 +11,12 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
+                <div class="mb-2">
+                    <a href="{{ route('adminify.crud.create', ['model' => $model->getTable()]) }}"
+                       class="btn btn-success"><i class="fa fa-plus"></i></a>
+                    <a href="{{ route('adminify.crud.delete', ['model' => $model->getTable(), 'object' => $object->getKey()]) }}"
+                       class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                </div>
                 <div class="card">
                     <div class="card-body card-primary card-outline">
                         <table id="example2" class="table table-bordered table-hover">

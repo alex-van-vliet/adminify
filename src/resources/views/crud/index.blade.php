@@ -32,7 +32,10 @@
                                     @endforeach
                                     <td>
                                         <a href="{{ route('adminify.crud.show', ['model' => $model->getTable(), 'object' => $object->getKey()]) }}"
-                                           class="btn btn-primary"><i class="fa fa-eye"></i></a></td>
+                                           class="btn btn-primary"><i class="fa fa-eye"></i></a>
+                                        <a href="{{ route('adminify.crud.delete', ['model' => $model->getTable(), 'object' => $object->getKey()]) }}"
+                                           class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -41,6 +44,7 @@
                                 @foreach($fields as [$name, $accessor, $field])
                                     <th>{{ $name }}</th>
                                 @endforeach
+                                <th>Actions</th>
                             </tr>
                             </tfoot>
                         </table>
