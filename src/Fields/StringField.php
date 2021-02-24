@@ -9,8 +9,15 @@ use Illuminate\Support\Str;
 
 class StringField extends Field
 {
+    public function isEmail(): bool
+    {
+        return Str::contains($this->accessor, 'email');
+    }
+
     public function view(): string
     {
+        if ($this->isEmail())
+            return 'adminify::fields.email';
         return 'adminify::fields.string';
     }
 
@@ -18,7 +25,7 @@ class StringField extends Field
     {
         $length = $this->field->getAttributes()['length'] ?? Builder::$defaultStringLength;
         $rules = ['required', "max:$length"];
-        if (Str::contains($this->accessor, 'email'))
+        if ($this->isEmail())
             $rules [] = 'email';
         return $rules;
     }
