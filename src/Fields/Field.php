@@ -36,10 +36,18 @@ abstract class Field
     {
         $formFieldClass = [
             MigratifyField::STRING => StringField::class,
+
             MigratifyField::BOOLEAN => BooleanField::class,
+
+            MigratifyField::FOREIGN_ID => ForeignField::class,
         ][$field->getType()];
 
         return new $formFieldClass($name, $accessor, $field);
+    }
+
+    public function getModelField()
+    {
+        return $this->field;
     }
 
     abstract public function view(): string;

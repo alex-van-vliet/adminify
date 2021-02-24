@@ -14,20 +14,8 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
-abstract class PageTest extends TestCase
+abstract class PageTest extends DatabaseTest
 {
-    use RefreshDatabase;
-
-    /**
-     * @var User An admin user.
-     */
-    protected User $admin;
-
-    /**
-     * @var User A regular user.
-     */
-    protected User $user;
-
     /**
      * Setup the environment.
      *
@@ -48,21 +36,6 @@ abstract class PageTest extends TestCase
         ]], function ($router) {
             Adminify::routes($router);
         });
-
-        require_once __DIR__ . '/database/migrations/2014_10_12_000000_create_users_table.php';
-
-        (new \CreateUsersTable())->up();
-        // Add admin field is automatically added.
-
-        config(['migratify.models' => [User::class]]);
-    }
-
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->admin = User::factory()->admin()->create();
-        $this->user = User::factory()->create();
     }
 
     abstract protected function route();
