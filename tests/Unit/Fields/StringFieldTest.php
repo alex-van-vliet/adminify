@@ -94,4 +94,15 @@ class StringFieldTest extends TestCase
         $field = Field::getField('Password', 'password', new MigratifyField(MigratifyField::STRING));
         $this->assertContains('confirmed', $field->rules());
     }
+
+    /** @test */
+    function custom_rules_can_be_added()
+    {
+        $field = Field::getField('Name', 'name', new MigratifyField(MigratifyField::STRING, [], [
+            'adminify' => [
+                'rules' => ['min:8'],
+            ],
+        ]));
+        $this->assertContains('min:8', $field->rules());
+    }
 }

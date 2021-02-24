@@ -19,7 +19,7 @@ use Illuminate\Notifications\Notifiable;
     'name' => [Field::STRING],
     'email' => [Field::STRING, ['unique']],
     'email_verified_at' => [Field::TIMESTAMP, ['nullable'], ['adminify' => ['hidden' => ['store']]]],
-    'password' => [Field::STRING, [], ['adminify' => ['hidden' => ['index']]]],
+    'password' => [Field::STRING, [], ['adminify' => ['hidden' => ['index'], 'rules' => ['min:8']]]],
     'remember_token' => [Field::STRING, ['length' => 100, 'nullable'], ['adminify' => ['hidden' => ['index', 'store']]]],
     'created_at' => [Field::TIMESTAMP, [], ['adminify' => ['hidden' => ['store']]]],
     'updated_at' => [Field::TIMESTAMP, [], ['adminify' => ['hidden' => ['store']]]],

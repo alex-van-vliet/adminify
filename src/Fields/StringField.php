@@ -47,6 +47,6 @@ class StringField extends Field
             $rules [] = 'email';
         if ($this->isUnique())
             $rules [] = Rule::unique($this->field->getModel()->getModel()->getTable(), $this->accessor);
-        return $rules;
+        return array_merge($rules, $this->field->getOptions()['adminify']['rules'] ?? []);
     }
 }
