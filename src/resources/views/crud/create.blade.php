@@ -13,6 +13,8 @@
             <div class="col-12">
                 <div class="card card-primary card-outline">
                     <form>
+                        @csrf
+
                         <div class="card-body">
                             @foreach($fields as [$name, $accessor, $field, $formField])
                                 {!! $formField !!}
