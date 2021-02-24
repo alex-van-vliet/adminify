@@ -5,6 +5,7 @@ namespace AlexVanVliet\Adminify\Http\Controllers\Crud;
 
 
 use AlexVanVliet\Adminify\Fields\Field;
+use AlexVanVliet\Adminify\Fields\StringField;
 use AlexVanVliet\Adminify\Http\Controllers\Controller;
 use AlexVanVliet\Adminify\ModelTrait;
 use AlexVanVliet\Migratify\Model;
@@ -14,6 +15,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use ReflectionException;
 
 class StoreController extends Controller
@@ -41,6 +43,16 @@ class StoreController extends Controller
         $rules = $fields->mapWithKeys(fn($field) => [$field->getAccessor() => $field->rules()]);
 
         $data = $this->validate($request, $rules->toArray());
+
+        $mappedFields = $fields->mapWithKeys(fn($field) => [$field->getAccessor() => $field]);
+
+        foreach ($data as $k => $v) {
+            if ($field = $mappedFields[$k] ?? null) {
+                if (($field instanceof StringField) and ($field->isPassword())) {
+                    $data[$k] = Hash::make($v);
+                }
+            }
+        }
 
         $model->create($data);
 

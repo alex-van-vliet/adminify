@@ -6,6 +6,7 @@ namespace AlexVanVliet\Adminify\Tests\Feature\Crud;
 
 use AlexVanVliet\Adminify\Tests\PageTest;
 use AlexVanVliet\Adminify\Tests\User;
+use Illuminate\Support\Facades\Hash;
 
 class StorePageTest extends PageTest
 {
@@ -39,7 +40,7 @@ class StorePageTest extends PageTest
         $this->assertNotNull($user);
         $this->assertSame('Test Name', $user->name);
         $this->assertSame('test@localhost', $user->email);
-        $this->assertSame('password', $user->password);
+        $this->assertTrue(Hash::check('password', $user->password));
     }
 
     /** @test */
