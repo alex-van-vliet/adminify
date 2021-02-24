@@ -49,4 +49,14 @@ class CreatePageTest extends PageTest
         $response->assertDontSeeText('Created At');
         $response->assertDontSeeText('Updated At');
     }
+
+    /** @test */
+    function the_create_page_displays_old_data()
+    {
+        $response = $this->actingAs($this->admin)->session([
+            '_old_input' => ['name' => 'This Is My Name'],
+        ])->request();
+
+        $response->assertSee('This Is My Name');
+    }
 }
