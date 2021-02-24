@@ -26,10 +26,31 @@ class StringFieldTest extends TestCase
     }
 
     /** @test */
+    function the_string_field_returns_the_correct_view_if_the_accessor_contains_email()
+    {
+        $field = Field::getField('Email', 'email', new MigratifyField(MigratifyField::STRING));
+        $this->assertSame('adminify::fields.email', $field->view());
+    }
+
+    /** @test */
+    function the_string_field_returns_the_correct_view_if_the_accessor_contains_password()
+    {
+        $field = Field::getField('Password', 'password', new MigratifyField(MigratifyField::STRING));
+        $this->assertSame('adminify::fields.password', $field->view());
+    }
+
+    /** @test */
     function the_string_field_is_required()
     {
         $field = Field::getField('Name', 'name', new MigratifyField(MigratifyField::STRING));
         $this->assertEquals('required', $field->rules()[0]);
+    }
+
+    /** @test */
+    function the_string_field_is_a_string()
+    {
+        $field = Field::getField('Name', 'name', new MigratifyField(MigratifyField::STRING));
+        $this->assertEquals('string', $field->rules()[1]);
     }
 
     /** @test */
@@ -47,10 +68,17 @@ class StringFieldTest extends TestCase
     }
 
     /** @test */
-    function a_field_should_not_ne_an_email()
+    function a_field_should_not_be_an_email()
     {
         $field = Field::getField('Name', 'name', new MigratifyField(MigratifyField::STRING));
         $this->assertNotContains('email', $field->rules());
+    }
+
+    /** @test */
+    function a_field_should_not_be_confirmed()
+    {
+        $field = Field::getField('Name', 'name', new MigratifyField(MigratifyField::STRING));
+        $this->assertNotContains('confirmed', $field->rules());
     }
 
     /** @test */
@@ -58,5 +86,12 @@ class StringFieldTest extends TestCase
     {
         $field = Field::getField('Email', 'email', new MigratifyField(MigratifyField::STRING));
         $this->assertContains('email', $field->rules());
+    }
+
+    /** @test */
+    function an_accessor_containing_password_should_be_confirmed()
+    {
+        $field = Field::getField('Password', 'password', new MigratifyField(MigratifyField::STRING));
+        $this->assertContains('confirmed', $field->rules());
     }
 }

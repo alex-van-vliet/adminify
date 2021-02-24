@@ -29,6 +29,7 @@ class StorePageTest extends PageTest
             'name' => 'Test Name',
             'email' => 'test@localhost',
             'password' => 'password',
+            'password_confirmation' => 'password',
         ]);
         $response
             ->assertRedirect(route('adminify.crud.index', ['model' => (new User())->getTable()]))
@@ -50,6 +51,7 @@ class StorePageTest extends PageTest
             'name' => '',
             'email' => 'test@localhost',
             'password' => 'password',
+            'password_confirmation' => 'password',
         ]);
         $response
             ->assertRedirect(route('adminify.crud.create', ['model' => (new User())->getTable()]))
@@ -67,6 +69,7 @@ class StorePageTest extends PageTest
             'name' => '',
             'email' => 'test@localhost',
             'password' => 'password',
+            'password_confirmation' => 'password',
         ]);
         $response
             ->assertRedirect(route('adminify.crud.create', ['model' => (new User())->getTable()]))
@@ -83,6 +86,7 @@ class StorePageTest extends PageTest
             'name' => '',
             'email' => 'test@localhost',
             'password' => 'password',
+            'password_confirmation' => 'password',
         ]);
         $response->assertSessionHasErrors('name')
             ->assertSessionMissing('_old_input.password');

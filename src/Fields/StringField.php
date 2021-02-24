@@ -14,8 +14,15 @@ class StringField extends Field
         return Str::contains($this->accessor, 'email');
     }
 
+    public function isPassword(): bool
+    {
+        return Str::contains($this->accessor, 'password');
+    }
+
     public function view(): string
     {
+        if ($this->isPassword())
+            return 'adminify::fields.password';
         if ($this->isEmail())
             return 'adminify::fields.email';
         return 'adminify::fields.string';
@@ -24,7 +31,11 @@ class StringField extends Field
     public function rules(): array
     {
         $length = $this->field->getAttributes()['length'] ?? Builder::$defaultStringLength;
-        $rules = ['required', 'string', "max:$length"];
+        $rules = ['required', 'string'];
+        if (!$this->isPassword())
+            $rules [] = "max:$length";
+        else
+            $rules [] = 'confirmed';
         if ($this->isEmail())
             $rules [] = 'email';
         return $rules;
