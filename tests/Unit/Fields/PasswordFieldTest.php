@@ -22,20 +22,20 @@ class PasswordFieldTest extends TestCase
     }
 
     /** @test */
-    public function it_creates_a_string_field()
+    function it_creates_a_string_field()
     {
         $this->assertSame('Password', $this->field->getName());
         $this->assertSame('password', $this->field->getAccessor());
     }
 
     /** @test */
-    public function it_is_a_password()
+    function it_is_a_password()
     {
         $this->assertTrue($this->field->isPassword());
     }
 
     /** @test */
-    public function it_returns_the_correct_view()
+    function it_returns_the_correct_view()
     {
         $this->assertSame('adminify::fields.password', $this->field->view());
     }

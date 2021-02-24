@@ -21,26 +21,26 @@ class StringFieldTest extends TestCase
     }
 
     /** @test */
-    public function it_creates_a_string_field()
+    function it_creates_a_string_field()
     {
         $this->assertSame('Name', $this->field->getName());
         $this->assertSame('name', $this->field->getAccessor());
     }
 
     /** @test */
-    public function it_is_not_an_email()
+    function it_is_not_an_email()
     {
         $this->assertFalse($this->field->isEmail());
     }
 
     /** @test */
-    public function it_is_not_a_password()
+    function it_is_not_a_password()
     {
         $this->assertFalse($this->field->isPassword());
     }
 
     /** @test */
-    public function it_returns_the_correct_view()
+    function it_returns_the_correct_view()
     {
         $this->assertSame('adminify::fields.string', $this->field->view());
     }

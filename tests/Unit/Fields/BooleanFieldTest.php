@@ -21,14 +21,14 @@ class BooleanFieldTest extends TestCase
     }
 
     /** @test */
-    public function it_creates_a_boolean_field()
+    function it_creates_a_boolean_field()
     {
         $this->assertSame('Admin', $this->field->getName());
         $this->assertSame('admin', $this->field->getAccessor());
     }
 
     /** @test */
-    public function it_returns_the_correct_view()
+    function it_returns_the_correct_view()
     {
         $this->assertSame('adminify::fields.boolean', $this->field->view());
     }

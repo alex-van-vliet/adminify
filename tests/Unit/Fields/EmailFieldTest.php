@@ -21,20 +21,20 @@ class EmailFieldTest extends TestCase
     }
 
     /** @test */
-    public function it_creates_a_string_field()
+    function it_creates_a_string_field()
     {
         $this->assertSame('Email', $this->field->getName());
         $this->assertSame('email', $this->field->getAccessor());
     }
 
     /** @test */
-    public function it_is_an_email()
+    function it_is_an_email()
     {
         $this->assertTrue($this->field->isEmail());
     }
 
     /** @test */
-    public function it_returns_the_correct_view()
+    function it_returns_the_correct_view()
     {
         $this->assertSame('adminify::fields.email', $this->field->view());
     }
