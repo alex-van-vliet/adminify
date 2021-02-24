@@ -4,6 +4,7 @@
 namespace AlexVanVliet\Adminify\Http\Controllers\Crud;
 
 
+use AlexVanVliet\Adminify\Fields\BooleanField;
 use AlexVanVliet\Adminify\Fields\Field;
 use AlexVanVliet\Adminify\Fields\StringField;
 use AlexVanVliet\Adminify\Http\Controllers\Controller;
@@ -47,10 +48,11 @@ class StoreController extends Controller
         $mappedFields = $fields->mapWithKeys(fn($field) => [$field->getAccessor() => $field]);
 
         foreach ($data as $k => $v) {
-            if ($field = $mappedFields[$k] ?? null) {
-                if (($field instanceof StringField) and ($field->isPassword())) {
-                    $data[$k] = Hash::make($v);
-                }
+            $field = $mappedFields[$k];
+            if (($field instanceof StringField) and ($field->isPassword())) {
+                $data[$k] = Hash::make($v);
+            } else if ($field instanceof BooleanField) {
+                $data[$k] = boolval($v);
             }
         }
 
