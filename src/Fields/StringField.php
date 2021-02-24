@@ -24,7 +24,7 @@ class StringField extends Field
     public function rules(): array
     {
         $length = $this->field->getAttributes()['length'] ?? Builder::$defaultStringLength;
-        $rules = ['required', "max:$length"];
+        $rules = ['required', 'string', "max:$length"];
         if ($this->isEmail())
             $rules [] = 'email';
         return $rules;
