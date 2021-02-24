@@ -45,4 +45,6 @@ abstract class Field
     abstract public function view(): string;
 
     abstract public function rules(): array;
+
+    abstract public function value(mixed $value): mixed;
 }

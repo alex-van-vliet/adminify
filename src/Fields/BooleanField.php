@@ -19,4 +19,9 @@ class BooleanField extends Field
     {
         return [];
     }
+
+    public function value(mixed $value): bool
+    {
+        return boolval($value);
+    }
 }

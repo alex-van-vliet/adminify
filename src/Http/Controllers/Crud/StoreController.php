@@ -48,12 +48,7 @@ class StoreController extends Controller
         $mappedFields = $fields->mapWithKeys(fn($field) => [$field->getAccessor() => $field]);
 
         foreach ($data as $k => $v) {
-            $field = $mappedFields[$k];
-            if (($field instanceof StringField) and ($field->isPassword())) {
-                $data[$k] = Hash::make($v);
-            } else if ($field instanceof BooleanField) {
-                $data[$k] = boolval($v);
-            }
+            $data[$k] = $mappedFields[$k]->value($v);
         }
 
         $model->create($data);

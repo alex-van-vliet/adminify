@@ -7,6 +7,7 @@ namespace AlexVanVliet\Adminify\Tests\Unit\Fields;
 use AlexVanVliet\Adminify\Fields\Field;
 use AlexVanVliet\Adminify\Tests\TestCase;
 use AlexVanVliet\Migratify\Fields\Field as MigratifyField;
+use Illuminate\Support\Facades\Hash;
 
 class StringFieldTest extends TestCase
 {
@@ -104,5 +105,20 @@ class StringFieldTest extends TestCase
             ],
         ]));
         $this->assertContains('min:8', $field->rules());
+    }
+
+    /** @test */
+    function its_value_can_be_computed()
+    {
+        $field = Field::getField('Name', 'name', new MigratifyField(MigratifyField::STRING));
+        $this->assertSame('test', $field->value('test'));
+    }
+
+    /** @test */
+    function password_field_value_is_hashed()
+    {
+        $field = Field::getField('Password', 'password', new MigratifyField(MigratifyField::STRING));
+        $this->assertNotSame('test', $field->value('test'));
+        $this->assertTrue(Hash::check('test', $field->value('test')));
     }
 }

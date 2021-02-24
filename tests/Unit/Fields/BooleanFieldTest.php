@@ -31,4 +31,13 @@ class BooleanFieldTest extends TestCase
         $field = Field::getField('Admin', 'admin', new MigratifyField(MigratifyField::BOOLEAN));
         $this->assertSame([], $field->rules());
     }
+
+    /** @test */
+    function its_value_can_be_computed()
+    {
+        $field = Field::getField('Admin', 'admin', new MigratifyField(MigratifyField::BOOLEAN));
+        $this->assertTrue($field->value('1'));
+        $this->assertFalse($field->value('0'));
+        $this->assertFalse($field->value(null));
+    }
 }

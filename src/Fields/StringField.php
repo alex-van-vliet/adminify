@@ -5,6 +5,7 @@ namespace AlexVanVliet\Adminify\Fields;
 
 
 use Illuminate\Database\Schema\Builder;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
@@ -48,5 +49,14 @@ class StringField extends Field
         if ($this->isUnique())
             $rules [] = Rule::unique($this->field->getModel()->getModel()->getTable(), $this->accessor);
         return array_merge($rules, $this->field->getOptions()['adminify']['rules'] ?? []);
+    }
+
+    public function value(mixed $value): string
+    {
+        if ($this->isPassword()) {
+            return Hash::make($value);
+        } else {
+            return $value;
+        }
     }
 }
