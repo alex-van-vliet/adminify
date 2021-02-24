@@ -33,7 +33,7 @@ class CreateController extends Controller
         $fields = $model->getAdminFields($attribute);
 
         $hiddenFields = $model->getAdminHiddenFields('store', $attribute);
-        $fields = $fields->filter(fn($field) => !$hiddenFields->contains($field[1]));
+        $fields = $fields->filter(fn($field) => !$hiddenFields->contains($field[1]))->values();
 
         $fields = $fields->map(fn($field) => array_merge($field, [Field::getField($field)]));
 
