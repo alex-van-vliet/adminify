@@ -16,6 +16,16 @@ abstract class Field
     {
     }
 
+    public function getAccessor(): string
+    {
+        return $this->accessor;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
     /**
      * @param [string, string, MigratifyField] $field
      * @return static
@@ -32,6 +42,6 @@ abstract class Field
         return new $formFieldClass($name, $accessor, $field);
     }
 
-    abstract public function __toString(): string;
+    abstract public function view(): string;
     abstract public function rules(): array;
 }

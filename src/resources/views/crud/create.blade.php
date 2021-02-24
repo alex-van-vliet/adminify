@@ -16,8 +16,10 @@
                         @csrf
 
                         <div class="card-body">
-                            @foreach($fields as [$name, $accessor, $field, $formField])
-                                {!! $formField !!}
+                            @foreach($fields as [$_1, $_2, $_3, $formField])
+                                @include($formField->view(), ['field' => $formField,
+                                                              'name' => $formField->getName(),
+                                                              'accessor' => $formField->getAccessor()])
                             @endforeach
                         </div>
 
