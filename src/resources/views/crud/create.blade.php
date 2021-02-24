@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card card-primary card-outline">
-                    <form>
+                    <form method="POST" action="{{ route('adminify.crud.store', ['model' => $model->getTable()]) }}">
                         @csrf
 
                         <div class="card-body">

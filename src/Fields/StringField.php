@@ -4,6 +4,8 @@
 namespace AlexVanVliet\Adminify\Fields;
 
 
+use Illuminate\Database\Schema\Builder;
+
 class StringField extends Field
 {
     public function __toString(): string
@@ -14,5 +16,11 @@ class StringField extends Field
     <input type="text" name="{$this->accessor}" class="form-control" id="{$this->accessor}">
 </div>
 HTML;
+    }
+
+    public function rules(): array
+    {
+        $length = $this->field->getAttributes()['length'] ?? Builder::$defaultStringLength;
+        return ['required', "max:$length"];
     }
 }
