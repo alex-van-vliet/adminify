@@ -4,6 +4,7 @@
 namespace AlexVanVliet\Adminify\Http\Controllers\Crud;
 
 
+use AlexVanVliet\Adminify\Fields\Field;
 use AlexVanVliet\Adminify\Http\Controllers\Controller;
 use AlexVanVliet\Adminify\ModelTrait;
 use AlexVanVliet\Migratify\Model;
@@ -33,6 +34,8 @@ class CreateController extends Controller
 
         $hiddenFields = $model->getAdminHiddenFields('store', $attribute);
         $fields = $fields->filter(fn($field) => !$hiddenFields->contains($field[1]));
+
+        $fields = $fields->map(fn($field) => array_merge($field, [Field::getField($field)]));
 
         return view('adminify::crud.create', compact('attribute', 'fields', 'model'));
     }

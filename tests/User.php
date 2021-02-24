@@ -15,7 +15,7 @@ use Illuminate\Notifications\Notifiable;
 
 #[Model([
     'id' => [Field::ID, [], ['adminify' => ['hidden' => ['store']]]],
-    'admin' => [Field::BOOLEAN, ['default' => false]],
+    'admin' => [Field::BOOLEAN, ['default' => false], ['adminify' => ['hidden' => ['store']]]],
     'name' => [Field::STRING],
     'email' => [Field::STRING, ['unique']],
     'email_verified_at' => [Field::TIMESTAMP, ['nullable'], ['adminify' => ['hidden' => ['store']]]],

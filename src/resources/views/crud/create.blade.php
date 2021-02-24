@@ -14,11 +14,8 @@
                 <div class="card card-primary card-outline">
                     <form>
                         <div class="card-body">
-                            @foreach($fields as [$name, $accessor, $field])
-                                <div class="form-group">
-                                    <label for="{{ $accessor }}">{{ $name }}</label>
-                                    <input type="text" name="{{ $accessor }}" class="form-control" id="{{ $accessor }}">
-                                </div>
+                            @foreach($fields as [$name, $accessor, $field, $formField])
+                                {!! $formField !!}
                             @endforeach
                         </div>
 
