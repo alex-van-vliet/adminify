@@ -84,12 +84,4 @@ abstract class PageTest extends TestCase
 
         $response->assertForbidden();
     }
-
-    /** @test */
-    function admin_users_are_allowed()
-    {
-        $response = $this->actingAs($this->admin)->request();
-
-        $response->assertOk();
-    }
 }
