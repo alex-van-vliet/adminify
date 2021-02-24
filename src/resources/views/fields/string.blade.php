@@ -9,7 +9,7 @@ $error = $errors->first($accessor) ?: null;
            class="form-control {{ $error ? 'is-invalid' : '' }}"
            id="{{ $accessor }}"
            value="{{ $default }}"
-           {{ $error ? "aria-describedby=\"{$accessor}-error\"" : '' }}>
+           {{ $error ? "aria-describedby=\"{$accessor}-error\"" : '' }}/>
     @if($error)
         <span id="{{ $accessor }}-error" class="error invalid-feedback">{{ $error }}</span>
     @endif
