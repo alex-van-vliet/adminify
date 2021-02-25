@@ -9,6 +9,12 @@ use Illuminate\Database\Eloquent\Model as EloquentModel;
 
 abstract class Field
 {
+    /**
+     * Field constructor.
+     * @param string $name The name of the field (as displayed to the user).
+     * @param string $accessor The accessor to the field (as used in database).
+     * @param MigratifyField $field The migratify field.
+     */
     public function __construct(
         protected string $name,
         protected string $accessor,
@@ -17,21 +23,37 @@ abstract class Field
     {
     }
 
+    /**
+     * @return string
+     */
     public function getAccessor(): string
     {
         return $this->accessor;
     }
 
+    /**
+     * @return string
+     */
     public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     * @param string $name The name.
-     * @param string $accessor The accessor.
-     * @param MigratifyField $field The field.
-     * @return static
+     * @return MigratifyField
+     */
+    public function getModelField()
+    {
+        return $this->field;
+    }
+
+    /**
+     * Get the correct field according to the type.
+     *
+     * @param string $name The name of the field (as displayed to the user).
+     * @param string $accessor The accessor to the field (as used in database).
+     * @param MigratifyField $field The migratify field.
+     * @return static The form field.
      */
     public static function getField($name, $accessor, $field): static
     {
@@ -46,15 +68,41 @@ abstract class Field
         return new $formFieldClass($name, $accessor, $field);
     }
 
-    public function getModelField()
+    /**
+     * Transform the value if necessary.
+     *
+     * @param mixed $value The value.
+     * @return mixed
+     */
+    public function value(mixed $value): mixed
     {
-        return $this->field;
+        return $value;
     }
 
+    /**
+     * Whether or not to keep the value.
+     *
+     * @param mixed $value The value.
+     * @param EloquentModel|null $object The object being updated, if any.
+     * @return bool
+     */
+    public function keepValue(mixed $value, ?EloquentModel $object = null): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get the name of the view used for the form field.
+     *
+     * @return string
+     */
     abstract public function view(): string;
 
+    /**
+     * Get the validation rules.
+     *
+     * @param EloquentModel|null $object The object being updated, if any.
+     * @return array
+     */
     abstract public function rules(?EloquentModel $object = null): array;
-
-    abstract public function value(mixed $value): mixed;
-    abstract public function keepValue(mixed $value, ?EloquentModel $object = null): bool;
 }

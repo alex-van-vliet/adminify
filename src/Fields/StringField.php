@@ -28,6 +28,11 @@ class StringField extends Field
             or in_array('unique', $this->field->getAttributes());
     }
 
+    /**
+     * Get the name of the view used for the form field.
+     *
+     * @return string
+     */
     public function view(): string
     {
         if ($this->isPassword())
@@ -37,6 +42,12 @@ class StringField extends Field
         return 'adminify::fields.string';
     }
 
+    /**
+     * Get the validation rules.
+     *
+     * @param EloquentModel|null $object The object being updated, if any.
+     * @return array
+     */
     public function rules(?EloquentModel $object = null): array
     {
         $length = $this->field->getAttributes()['length'] ?? Builder::$defaultStringLength;
@@ -60,6 +71,12 @@ class StringField extends Field
         return array_merge($rules, $this->field->getOptions()['adminify']['rules'] ?? []);
     }
 
+    /**
+     * Hash the value if it is a password.
+     *
+     * @param mixed $value The value.
+     * @return mixed
+     */
     public function value(mixed $value): string
     {
         if ($this->isPassword()) {
@@ -69,6 +86,13 @@ class StringField extends Field
         }
     }
 
+    /**
+     * Remove the value only if it is a password, the object is being updated and its value is null.
+     *
+     * @param mixed $value The value.
+     * @param EloquentModel|null $object The object being updated, if any.
+     * @return bool
+     */
     public function keepValue(mixed $value, ?EloquentModel $object = null): bool
     {
         if ($this->isPassword() && !is_null($object) && is_null($value))

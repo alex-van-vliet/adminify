@@ -9,11 +9,22 @@ use Illuminate\Validation\Rule;
 
 class ForeignField extends Field
 {
+    /**
+     * Get the name of the view used for the form field.
+     *
+     * @return string
+     */
     public function view(): string
     {
         return 'adminify::fields.foreign';
     }
 
+    /**
+     * Get the validation rules.
+     *
+     * @param EloquentModel|null $object The object being updated, if any.
+     * @return array
+     */
     public function rules(?EloquentModel $object = null): array
     {
         $referenced_model = $this->field->getOptions()['references_model'];
@@ -25,16 +36,11 @@ class ForeignField extends Field
         ];
     }
 
-    public function value(mixed $value): string
-    {
-        return $value;
-    }
-
-    public function keepValue(mixed $value, ?EloquentModel $object = null): bool
-    {
-        return true;
-    }
-
+    /**
+     * Get all the referenced objects.
+     *
+     * @return mixed
+     */
     public function getReferenced()
     {
         $referenced_model = $this->field->getOptions()['references_model'];

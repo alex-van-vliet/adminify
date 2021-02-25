@@ -13,6 +13,7 @@ use AlexVanVliet\Adminify\Http\Controllers\Crud\ShowController as CrudShowContro
 use AlexVanVliet\Adminify\Http\Controllers\Crud\StoreController as CrudStoreController;
 use AlexVanVliet\Adminify\Http\Controllers\Crud\UpdateController as CrudUpdateController;
 use AlexVanVliet\Adminify\Http\Controllers\IndexController;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Routing\Router;
 
 class AdminifyRoutes
@@ -21,6 +22,7 @@ class AdminifyRoutes
      * Register all the necessary routes
      *
      * @param Router|null $router The router.
+     * @throws BindingResolutionException
      */
     public function routes(?Router $router): void
     {
