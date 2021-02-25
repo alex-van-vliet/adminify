@@ -32,15 +32,17 @@ class StorePageTest extends PageTest
             'password' => 'password',
             'password_confirmation' => 'password',
         ]);
-        $response
-            ->assertRedirect(route('adminify.crud.index', ['model' => (new User())->getTable()]))
-            ->assertSessionHasNoErrors();
 
         $user = User::where('email', 'test@localhost')->first();
         $this->assertNotNull($user);
         $this->assertSame('Test Name', $user->name);
         $this->assertSame('test@localhost', $user->email);
         $this->assertTrue(Hash::check('password', $user->password));
+
+        $response
+            ->assertRedirect(route('adminify.crud.show', ['model' => (new User())->getTable(),
+                'object' => $user->getKey()]))
+            ->assertSessionHasNoErrors();
     }
 
     /** @test */

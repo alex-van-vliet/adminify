@@ -51,8 +51,9 @@ class StoreController extends Controller
             $data[$k] = $mappedFields[$k]->value($v);
         }
 
-        $model->create($data);
+        $object = $model->create($data);
 
-        return redirect()->route('adminify.crud.index', ['model' => $model->getTable()]);
+        return redirect()->route('adminify.crud.show', ['model' => $model->getTable(),
+            'object' => $object->getKey()]);
     }
 }
