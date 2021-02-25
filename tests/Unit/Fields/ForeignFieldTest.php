@@ -59,4 +59,13 @@ class ForeignFieldTest extends DatabaseTest
     {
         $this->assertEquals(Rule::exists('users', 'id'), $this->field->rules()[1]);
     }
+
+    /** @test */
+    function it_is_kept()
+    {
+        $this->assertTrue($this->field->keepValue(2));
+        $this->assertTrue($this->field->keepValue(null));
+        $this->assertTrue($this->field->keepValue(2, $this->user));
+        $this->assertTrue($this->field->keepValue(null, $this->user));
+    }
 }

@@ -6,10 +6,10 @@ namespace AlexVanVliet\Adminify\Tests\Unit\Fields;
 
 use AlexVanVliet\Adminify\Fields\Field;
 use AlexVanVliet\Adminify\Fields\StringField;
-use AlexVanVliet\Adminify\Tests\TestCase;
+use AlexVanVliet\Adminify\Tests\DatabaseTest;
 use AlexVanVliet\Migratify\Fields\Field as MigratifyField;
 
-class StringFieldTest extends TestCase
+class StringFieldTest extends DatabaseTest
 {
     protected StringField $field;
 
@@ -85,5 +85,14 @@ class StringFieldTest extends TestCase
             ],
         ]));
         $this->assertContains('min:8', $field->rules());
+    }
+
+    /** @test */
+    function it_is_kept()
+    {
+        $this->assertTrue($this->field->keepValue('test'));
+        $this->assertTrue($this->field->keepValue(null));
+        $this->assertTrue($this->field->keepValue('test', $this->user));
+        $this->assertTrue($this->field->keepValue(null, $this->user));
     }
 }

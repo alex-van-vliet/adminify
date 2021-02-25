@@ -4,9 +4,7 @@
 namespace AlexVanVliet\Adminify\Fields;
 
 
-use Illuminate\Database\Schema\Builder;
-use Illuminate\Support\Str;
-use Illuminate\Validation\Rule;
+use Illuminate\Database\Eloquent\Model as EloquentModel;
 
 class BooleanField extends Field
 {
@@ -15,13 +13,18 @@ class BooleanField extends Field
         return 'adminify::fields.boolean';
     }
 
-    public function rules(): array
+    public function rules(?EloquentModel $object = null): array
     {
         return [];
     }
 
-    public function value(mixed $value): bool
+    public function value(mixed $value, ?EloquentModel $object = null): bool
     {
         return boolval($value);
+    }
+
+    public function keepValue(mixed $value, ?EloquentModel $object = null): bool
+    {
+        return true;
     }
 }

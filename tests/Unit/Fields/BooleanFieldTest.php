@@ -6,10 +6,10 @@ namespace AlexVanVliet\Adminify\Tests\Unit\Fields;
 
 use AlexVanVliet\Adminify\Fields\BooleanField;
 use AlexVanVliet\Adminify\Fields\Field;
-use AlexVanVliet\Adminify\Tests\TestCase;
+use AlexVanVliet\Adminify\Tests\DatabaseTest;
 use AlexVanVliet\Migratify\Fields\Field as MigratifyField;
 
-class BooleanFieldTest extends TestCase
+class BooleanFieldTest extends DatabaseTest
 {
     protected BooleanField $field;
 
@@ -45,5 +45,16 @@ class BooleanFieldTest extends TestCase
         $this->assertTrue($this->field->value('1'));
         $this->assertFalse($this->field->value('0'));
         $this->assertFalse($this->field->value(null));
+    }
+
+    /** @test */
+    function it_is_kept()
+    {
+        $this->assertTrue($this->field->keepValue('1'));
+        $this->assertTrue($this->field->keepValue('0'));
+        $this->assertTrue($this->field->keepValue(null));
+        $this->assertTrue($this->field->keepValue('1', $this->user));
+        $this->assertTrue($this->field->keepValue('0', $this->user));
+        $this->assertTrue($this->field->keepValue(null, $this->user));
     }
 }

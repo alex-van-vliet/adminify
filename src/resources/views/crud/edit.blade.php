@@ -13,7 +13,9 @@
         <div class="row">
             <div class="col-12">
                 <div class="card card-primary card-outline">
-                    <form method="POST" action="">
+                    <form method="POST" action="{{ route('adminify.crud.update', ['model' => $model->getTable(), 'object' => $object]) }}">
+                        @method('PUT')
+
                         @csrf
 
                         <div class="card-body">

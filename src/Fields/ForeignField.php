@@ -14,7 +14,7 @@ class ForeignField extends Field
         return 'adminify::fields.foreign';
     }
 
-    public function rules(): array
+    public function rules(?EloquentModel $object = null): array
     {
         $referenced_model = $this->field->getOptions()['references_model'];
         /** @var EloquentModel $referenced_model */
@@ -28,6 +28,11 @@ class ForeignField extends Field
     public function value(mixed $value): string
     {
         return $value;
+    }
+
+    public function keepValue(mixed $value, ?EloquentModel $object = null): bool
+    {
+        return true;
     }
 
     public function getReferenced()

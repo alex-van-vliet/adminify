@@ -5,6 +5,7 @@ namespace AlexVanVliet\Adminify\Fields;
 
 
 use AlexVanVliet\Migratify\Fields\Field as MigratifyField;
+use Illuminate\Database\Eloquent\Model as EloquentModel;
 
 abstract class Field
 {
@@ -52,7 +53,8 @@ abstract class Field
 
     abstract public function view(): string;
 
-    abstract public function rules(): array;
+    abstract public function rules(?EloquentModel $object = null): array;
 
     abstract public function value(mixed $value): mixed;
+    abstract public function keepValue(mixed $value, ?EloquentModel $object = null): bool;
 }

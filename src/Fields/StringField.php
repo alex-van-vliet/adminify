@@ -4,6 +4,7 @@
 namespace AlexVanVliet\Adminify\Fields;
 
 
+use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Database\Schema\Builder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -36,18 +37,26 @@ class StringField extends Field
         return 'adminify::fields.string';
     }
 
-    public function rules(): array
+    public function rules(?EloquentModel $object = null): array
     {
         $length = $this->field->getAttributes()['length'] ?? Builder::$defaultStringLength;
-        $rules = ['required', 'string'];
+        if ($this->isPassword() and !is_null($object))
+            $rules = ['nullable', 'string'];
+        else
+            $rules = ['required', 'string'];
         if (!$this->isPassword())
             $rules [] = "max:$length";
         else
             $rules [] = 'confirmed';
         if ($this->isEmail())
             $rules [] = 'email';
-        if ($this->isUnique())
-            $rules [] = Rule::unique($this->field->getModel()->getModel()->getTable(), $this->accessor);
+        if ($this->isUnique()) {
+            if (is_null($object)) {
+                $rules [] = Rule::unique($this->field->getModel()->getModel()->getTable(), $this->accessor);
+            } else {
+                $rules [] = Rule::unique($this->field->getModel()->getModel()->getTable(), $this->accessor)->ignore($object->getKey(), $object->getKeyName());
+            }
+        }
         return array_merge($rules, $this->field->getOptions()['adminify']['rules'] ?? []);
     }
 
@@ -58,5 +67,12 @@ class StringField extends Field
         } else {
             return $value;
         }
+    }
+
+    public function keepValue(mixed $value, ?EloquentModel $object = null): bool
+    {
+        if ($this->isPassword() && !is_null($object) && is_null($value))
+            return false;
+        return true;
     }
 }

@@ -6,11 +6,11 @@ namespace AlexVanVliet\Adminify\Tests\Unit\Fields;
 
 use AlexVanVliet\Adminify\Fields\Field;
 use AlexVanVliet\Adminify\Fields\StringField;
-use AlexVanVliet\Adminify\Tests\TestCase;
+use AlexVanVliet\Adminify\Tests\DatabaseTest;
 use AlexVanVliet\Migratify\Fields\Field as MigratifyField;
 use Illuminate\Support\Facades\Hash;
 
-class PasswordFieldTest extends TestCase
+class PasswordFieldTest extends DatabaseTest
 {
     protected StringField $field;
 
@@ -68,5 +68,19 @@ class PasswordFieldTest extends TestCase
     function it_returns_the_hashed_value()
     {
         $this->assertTrue(Hash::check('test', $this->field->value('test')));
+    }
+
+    /** @test */
+    function it_is_kept_on_store_and_if_not_null()
+    {
+        $this->assertTrue($this->field->keepValue(null));
+        $this->assertTrue($this->field->keepValue('newpwd'));
+        $this->assertTrue($this->field->keepValue('newpwd', $this->user));
+    }
+
+    /** @test */
+    function it_is_removed_if_null_on_update()
+    {
+        $this->assertFalse($this->field->keepValue(null, $this->user));
     }
 }
