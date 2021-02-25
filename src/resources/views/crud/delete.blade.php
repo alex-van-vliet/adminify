@@ -15,7 +15,12 @@
                 <div class="card">
                     <div class="card-body card-danger card-outline">
                         {{ $model->getAdminTitle(true) }} {{ $object->getKey() }} is going to be deleted.
-                        <form>
+                        <form method="POST"
+                              action="{{ route('adminify.crud.destroy', ['model' => $model->getTable(), 'object' => $object]) }}">
+                            @method('DELETE')
+
+                            @csrf
+
                             <button type="submit" class="btn btn-danger">Delete</button>
                             <a href="javascript:history.back()" class="btn btn-outline-primary">Go back</a>
                         </form>
