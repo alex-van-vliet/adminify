@@ -14,15 +14,15 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 #[Model([
-    'id' => [Field::ID, [], ['adminify' => ['hidden' => ['store']]]],
+    'id' => [Field::ID, [], ['adminify' => ['hidden' => ['store', 'update']]]],
     'admin' => [Field::BOOLEAN, ['default' => false]],
     'name' => [Field::STRING],
     'email' => [Field::STRING, ['unique']],
-    'email_verified_at' => [Field::TIMESTAMP, ['nullable'], ['adminify' => ['hidden' => ['store']]]],
+    'email_verified_at' => [Field::TIMESTAMP, ['nullable'], ['adminify' => ['hidden' => ['store', 'update']]]],
     'password' => [Field::STRING, [], ['adminify' => ['hidden' => ['index', 'show'], 'rules' => ['min:8']]]],
-    'remember_token' => [Field::STRING, ['length' => 100, 'nullable'], ['adminify' => ['hidden' => ['index', 'store', 'show']]]],
-    'created_at' => [Field::TIMESTAMP, ['nullable'], ['adminify' => ['hidden' => ['store']]]],
-    'updated_at' => [Field::TIMESTAMP, ['nullable'], ['adminify' => ['hidden' => ['store']]]],
+    'remember_token' => [Field::STRING, ['length' => 100, 'nullable'], ['adminify' => ['hidden' => ['index', 'store', 'show', 'update']]]],
+    'created_at' => [Field::TIMESTAMP, ['nullable'], ['adminify' => ['hidden' => ['store', 'update']]]],
+    'updated_at' => [Field::TIMESTAMP, ['nullable'], ['adminify' => ['hidden' => ['store', 'update']]]],
 ])]
 class User extends Authenticatable
 {

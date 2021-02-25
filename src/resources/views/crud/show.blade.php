@@ -14,6 +14,8 @@
                 <div class="mb-2">
                     <a href="{{ route('adminify.crud.create', ['model' => $model->getTable()]) }}"
                        class="btn btn-success"><i class="fa fa-plus"></i></a>
+                    <a href="{{ route('adminify.crud.edit', ['model' => $model->getTable(), 'object' => $object->getKey()]) }}"
+                       class="btn btn-secondary"><i class="fa fa-edit"></i></a>
                     <a href="{{ route('adminify.crud.delete', ['model' => $model->getTable(), 'object' => $object->getKey()]) }}"
                        class="btn btn-danger"><i class="fa fa-trash"></i></a>
                 </div>

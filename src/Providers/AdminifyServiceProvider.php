@@ -49,6 +49,7 @@ class AdminifyServiceProvider extends ServiceProvider
         Gate::define('adminify.admin.crud.store', fn($user, $model) => boolval($user->admin));
         Gate::define('adminify.admin.crud.show', fn($user, $model, $object) => boolval($user->admin));
         Gate::define('adminify.admin.crud.destroy', fn($user, $model, $object) => boolval($user->admin));
+        Gate::define('adminify.admin.crud.update', fn($user, $model, $object) => boolval($user->admin));
 
         Route::bind('model', function ($value) {
             foreach (config('migratify.models') as $model) {

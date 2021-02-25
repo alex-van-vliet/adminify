@@ -7,6 +7,7 @@ namespace AlexVanVliet\Adminify\routes;
 use AlexVanVliet\Adminify\Http\Controllers\Crud\CreateController as CrudCreateController;
 use AlexVanVliet\Adminify\Http\Controllers\Crud\DeleteController as CrudDeleteController;
 use AlexVanVliet\Adminify\Http\Controllers\Crud\DestroyController as CrudDestroyController;
+use AlexVanVliet\Adminify\Http\Controllers\Crud\EditController as CrudEditController;
 use AlexVanVliet\Adminify\Http\Controllers\Crud\IndexController as CrudIndexController;
 use AlexVanVliet\Adminify\Http\Controllers\Crud\ShowController as CrudShowController;
 use AlexVanVliet\Adminify\Http\Controllers\Crud\StoreController as CrudStoreController;
@@ -31,6 +32,7 @@ class AdminifyRoutes
         $router->get("/crud/{model}/{object}", CrudShowController::class)->name('adminify.crud.show');
         $router->get("/crud/{model}/{object}/delete", CrudDeleteController::class)->name('adminify.crud.delete');
         $router->delete("/crud/{model}/{object}", CrudDestroyController::class)->name('adminify.crud.destroy');
+        $router->get("/crud/{model}/{object}/edit", CrudEditController::class)->name('adminify.crud.edit');
         $router->getRoutes()->refreshNameLookups();
     }
 }
