@@ -1,5 +1,5 @@
 @php
-$default = old($accessor);
+$default = old($accessor, ($object ?? null)?->{$accessor});
 $error = $errors->first($accessor) ?: null;
 $referenced = $field->getReferenced();
 @endphp

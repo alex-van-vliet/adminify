@@ -20,7 +20,8 @@
                             @foreach($fields as $field)
                                 @include($field->view(), ['field' => $field,
                                                           'name' => $field->getName(),
-                                                          'accessor' => $field->getAccessor()])
+                                                          'accessor' => $field->getAccessor(),
+                                                          'object' => $object])
                             @endforeach
                         </div>
 
